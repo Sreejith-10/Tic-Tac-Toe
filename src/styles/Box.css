@@ -1,0 +1,32 @@
+.box {
+	width: 180px;
+	height: 180px;
+	background: white;
+	border-radius: 10px;
+	box-shadow: 2px 0px 5px 1px rgb(0 0 0 / 54%);
+    cursor: pointer;
+    border: none;
+    transition: all ease-in 0.3s;
+	font-size: 9.5rem;
+	text-align: center;
+	font-family: sans-serif;
+
+}
+.box:hover{
+    box-shadow: inset 0px 0px 10px 0px rgb(0 0 0);
+}
+
+.x{
+	color: rgb(244, 49, 14);
+}
+.o{
+	color: rgb(48, 48, 255);
+}
+
+@media(max-width:480px){
+	.box{
+		width: 80px;
+		height: 80px;
+		font-size: 4rem;
+	}
+}
