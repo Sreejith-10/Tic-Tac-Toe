@@ -5,11 +5,14 @@ import Box from "./Box";
 import Winner from "./Winner";
 import ScoreBoard from "./ScoreBoard";
 
-const Board = ({game, setGame, winner, setWinner}) => {
+const Board = () => {
 	const [arr, setArr] = useState(Array(9).fill(null)); //board peices
 	const [xPlayer, setXPlayer] = useState(true);
+	const [game, setGame] = useState(false);
+	const [winner, setWinner] = useState();
 	const [gameTie, setGameTie] = useState(false);
 	const [card, setCard] = useState(false);
+	const [gameOver,setGameOver] = useState(false)
 	const [scoreCard, setScoreCard] = useState({
 		x: 0,
 		tie: 0,
@@ -46,17 +49,22 @@ const Board = ({game, setGame, winner, setWinner}) => {
 		setArr(updatedArr);
 		setXPlayer(!xPlayer);
 	};
+
 	const checkWinner = (data) => {
+		console.log(data);
 		//iterating through the winning condition
 		for (let i = 0; i < winningCondition.length; i++) {
 			const [a, b, c] = winningCondition[i];
-			if (data[a] && data[a] === data[b] && data[b] === data[c]) {
-				setGame(true); //set win state to true if anyone wins?
+			if (data[a] && data[a] === data[b] && data[a] === data[c]) {
 				setWinner(data[a]); //player winned
+				setGame(true); //set win state to true if anyone wins?
 			}
 		}
 		checkGameTie();
-		game && updateScore(winner, gameTie);
+		if (game) {
+			setGameOver(true)
+			updateScore(winner, gameTie);
+		}
 	};
 	const checkGameTie = () => {
 		//check all fields are filled
@@ -77,13 +85,13 @@ const Board = ({game, setGame, winner, setWinner}) => {
 	const updateScore = (data, gameVal) => {
 		if (data === "x") {
 			//update x
-			setScoreCard(...scoreCard,{x:x++});
+			setScoreCard({...scoreCard, x: scoreCard.x + 1});
 		} else if (data === "o") {
 			//update o
-			setScoreCard(scoreCard.o++);
+			setScoreCard({...scoreCard, o: scoreCard.o + 1});
 		} else if (gameVal) {
 			//update tie
-			setScoreCard(scoreCard.tie++);
+			setScoreCard({...scoreCard, tie: scoreCard.tie + 1});
 		}
 	};
 	const resetGame = () => {
@@ -97,7 +105,22 @@ const Board = ({game, setGame, winner, setWinner}) => {
 
 	const boardPeices = arr.map((val, idx) => {
 		return (
-			<Box key={idx} value={val} idx={idx} onClickHandler={onClickHandler} />
+			<>
+				{!gameOver ? (
+					<Box
+						key={idx}
+						value={val}
+						idx={idx}
+						onClickHandler={onClickHandler}
+					/>
+				) : (
+					<Box
+						key={idx}
+						value={val}
+						idx={idx}
+					/>
+				)}
+			</>
 		);
 	});
 	return (
