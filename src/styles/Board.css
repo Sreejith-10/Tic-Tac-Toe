@@ -18,10 +18,9 @@
 	align-items: center;
 }
 h1 {
-	font-size: 2.8rem;
-	font-family: cursive;
+	font-size: 4rem;
+	font-family: monospace;
 	color: #e72300;
-	text-shadow: 1px 0px 4px #000000d4;
 }
 
 .winner-section {
@@ -50,10 +49,16 @@ h1 {
 	box-shadow: 2px 0px 5px 1px rgb(0 0 0 / 54%)
 }
 
+
+
+
 @media (max-width: 480px) {
 	.container {
 		width: auto;
 		height: auto;
+	}
+	h1{
+		font-size: 2.5rem;
 	}
 	.board {
 		width: 300px;
@@ -63,5 +68,6 @@ h1 {
 	}
 	.section{
 		width: 400px;
+		margin-bottom: 100px;
 	}
 }

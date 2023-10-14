@@ -56,38 +56,35 @@ const Board = ({game, setGame, winner, setWinner}) => {
 			}
 		}
 		checkGameTie();
-		game && updateScore(winner,gameTie);
+		game && updateScore(winner, gameTie);
 	};
 	const checkGameTie = () => {
 		//check all fields are filled
-		let count = 0;
+		let count = 1;
 		arr.filter((val) => {
 			if (val != null) {
 				count = count + 1;
 			}
 		});
 		//check if no winner
-		if (count === 8 && !game) {
+		if (count === 9 && !game) {
 			setGameTie(true);
 			setGame(true);
 		} else {
 			setGameTie(false);
 		}
 	};
-	const updateScore = (data,gameVal) => {
-		console.log("Provoked the function", data);
+	const updateScore = (data, gameVal) => {
 		if (data === "x") {
 			//update x
-			setScoreCard((scoreCard.x += 1));
+			setScoreCard(...scoreCard,{x:x++});
 		} else if (data === "o") {
 			//update o
-			setScoreCard((scoreCard.o += 1));
+			setScoreCard(scoreCard.o++);
 		} else if (gameVal) {
 			//update tie
-			setScoreCard((scoreCard.tie += 1));
+			setScoreCard(scoreCard.tie++);
 		}
-
-		console.log(scoreCard);
 	};
 	const resetGame = () => {
 		setArr(Array(9).fill(null));

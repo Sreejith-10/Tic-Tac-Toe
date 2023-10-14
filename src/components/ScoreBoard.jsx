@@ -1,5 +1,6 @@
 import "../styles/ScoreBoard.css";
 const ScoreBoard = ({setCard,scoreCard}) => {
+	console.log("Hello",scoreCard);
 	const closeScore = () => {
 		setCard(false);
 	};

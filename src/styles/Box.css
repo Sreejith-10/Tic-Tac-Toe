@@ -29,4 +29,7 @@
 		height: 80px;
 		font-size: 4rem;
 	}
+	.box:hover{
+		box-shadow: none;
+	}
 }
