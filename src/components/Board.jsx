@@ -3,7 +3,8 @@ import "../styles/Board.css";
 import React, {useState} from "react";
 import Box from "./Box";
 import Winner from "./Winner";
-import ScoreBoard from "./ScoreBoard";
+import Move from "./Move";
+import ResetButton from "./ResetButton";
 
 const Board = () => {
 	const [arr, setArr] = useState(Array(9).fill(null)); //board peices
@@ -11,13 +12,10 @@ const Board = () => {
 	const [game, setGame] = useState(false);
 	const [winner, setWinner] = useState();
 	const [gameTie, setGameTie] = useState(false);
-	const [card, setCard] = useState(false);
-	const [gameOver,setGameOver] = useState(false)
-	const [scoreCard, setScoreCard] = useState({
-		x: 0,
-		tie: 0,
-		o: 0,
-	});
+	const [gameOver, setGameOver] = useState(false);
+	const [xScore, setXscore] = useState(0);
+	const [oScore, setOscore] = useState(0);
+
 	const winningCondition = [
 		[0, 1, 2],
 		[3, 4, 5],
@@ -51,21 +49,18 @@ const Board = () => {
 	};
 
 	const checkWinner = (data) => {
-		console.log(data);
 		//iterating through the winning condition
 		for (let i = 0; i < winningCondition.length; i++) {
 			const [a, b, c] = winningCondition[i];
 			if (data[a] && data[a] === data[b] && data[a] === data[c]) {
 				setWinner(data[a]); //player winned
 				setGame(true); //set win state to true if anyone wins?
+				trialFunction(data[a]);
 			}
 		}
 		checkGameTie();
-		if (game) {
-			setGameOver(true)
-			updateScore(winner, gameTie);
-		}
 	};
+
 	const checkGameTie = () => {
 		//check all fields are filled
 		let count = 1;
@@ -82,25 +77,17 @@ const Board = () => {
 			setGameTie(false);
 		}
 	};
-	const updateScore = (data, gameVal) => {
-		if (data === "x") {
-			//update x
-			setScoreCard({...scoreCard, x: scoreCard.x + 1});
-		} else if (data === "o") {
-			//update o
-			setScoreCard({...scoreCard, o: scoreCard.o + 1});
-		} else if (gameVal) {
-			//update tie
-			setScoreCard({...scoreCard, tie: scoreCard.tie + 1});
-		}
-	};
 	const resetGame = () => {
 		setArr(Array(9).fill(null));
 		setGame(false);
+		setGameOver(false);
 	};
-
-	const showScore = () => {
-		setCard(true);
+	const resetBoard = () => {
+		setArr(Array(9).fill(null));
+	};
+	const trialFunction = (val) => {
+		val === "x" ? setXscore(xScore + 1) : setOscore(oScore + 1);
+		setGameOver(true);
 	};
 
 	const boardPeices = arr.map((val, idx) => {
@@ -114,11 +101,7 @@ const Board = () => {
 						onClickHandler={onClickHandler}
 					/>
 				) : (
-					<Box
-						key={idx}
-						value={val}
-						idx={idx}
-					/>
+					<Box key={idx} value={val} idx={idx} />
 				)}
 			</>
 		);
@@ -127,17 +110,20 @@ const Board = () => {
 		<div className="container">
 			<div className="section">
 				<h1>Tic Tac Toe</h1>
-				<button className="btn" onClick={showScore}>
-					Score
-				</button>
+				<div>
+					<ResetButton resetBoard={resetBoard} />
+				</div>
 			</div>
 			<div className="board">{boardPeices}</div>
-			{card ? <ScoreBoard setCard={setCard} scoreCard={scoreCard} /> : null}
 			{game ? (
 				<div className="winner-section">
 					<Winner winner={winner} resetGame={resetGame} gameTie={gameTie} />
 				</div>
-			) : null}
+			) : (
+				<div className="bottom">
+					<Move player={xPlayer} xScore={xScore} oScore={oScore} />
+				</div>
+			)}
 		</div>
 	);
 };

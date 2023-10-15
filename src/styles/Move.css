@@ -1,0 +1,49 @@
+.move-container {
+	width: 400px;
+	height: 100px;
+	margin-top: 25px;
+	border-radius: 10px;
+	box-shadow: 2px 0px 5px 1px rgb(0 0 0 / 54%);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.move {
+	width: 200px;
+	height: 100%;
+	text-align: center;
+}
+.move-o {
+	color: blue;
+	font-size: 5rem;
+}
+.move-x {
+	font-size: 5rem;
+}
+
+.x-css {
+	transition: linear(1 -11.03%, 1 100%) 10s;
+    border-top-left-radius: 10px;
+	border-top: 8px solid red;
+}
+
+.o-css {
+	transition: linear(1 -11.03%, 1 100%) 10s;
+    border-top-right-radius: 10px;
+	border-top: 8px solid blue;
+}
+
+@media (max-width: 480px) {
+	.move-container {
+		width: 300px;
+		height: 80px;
+		margin-top: 50px;
+	}
+	.move-o {
+		font-size: 4rem;
+	}
+	.move-x {
+		font-size: 4rem;
+	}
+}
